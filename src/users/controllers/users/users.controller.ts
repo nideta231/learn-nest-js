@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Request, Response } from 'express';
 
 @Controller('users')
 export class UsersController {
@@ -28,7 +29,7 @@ export class UsersController {
   }
 
   @Get('posts/comments')
-  getUsersPostsComments(){
+  getUsersPostsComments() {
     return [
       {
         posts: [
@@ -42,12 +43,18 @@ export class UsersController {
                 userId: 1,
                 username: 'Nath',
                 comment: 'Hey, i am Nath!!',
-                likes: 5
+                likes: 5,
               },
             ],
           },
         ],
       },
     ];
+  }
+
+  @Post()
+  createUser(@Req() request: Request, @Res() response: Response) {
+    console.log(request.body);
+    response.send("Created!");
   }
 }
